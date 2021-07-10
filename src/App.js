@@ -2,6 +2,8 @@ import axios from 'axios';
 import './App.css';
 import React from 'react';
 
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 export const getUserDetail = (id) =>{
   return axios.get(`/user/${id}/`)

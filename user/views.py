@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, HttpResponseNotFound,JsonResponse
 from rest_framework.decorators import permission_classes
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
@@ -8,6 +8,7 @@ from .serializers import UserSerializer
 from django.contrib.auth import get_user_model,login,logout
 from django.contrib.auth.hashers import check_password
 from django.views.decorators.csrf import csrf_exempt
+from django.views import View
 import re
 import json
 import random
@@ -95,3 +96,14 @@ class UserViewSet(viewsets.ModelViewSet):
         except KeyError:
             return [permission() for permission in self.permission_classes]
             
+
+class Assets(View):
+
+    def get(self, _request, filename):
+        path = os.path.join(os.path.dirname(__file__), 'static', filename)
+
+        if os.path.isfile(path):
+            with open(path, 'rb') as file:
+                return HttpResponse(file.read(), content_type='application/javascript')
+        else:
+            return HttpResponseNotFound()
