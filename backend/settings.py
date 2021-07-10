@@ -141,7 +141,10 @@ USE_TZ = True
 
 AUTH_USER_MODEL = "user.CustomUser"
 
+REACT_APP_DIR = os.path.join(BASE_DIR, '.') 
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
